@@ -3,10 +3,38 @@
 #include <string.h>
 
 #define MAX_LINE_LEN 1000
-
+#define FILE_1_PATH "file_1.txt"
+#define FILE_2_PATH "file_2.txt"
 int compare_files(  FILE *file_1, FILE *file_2, 
                     char *line_1, char *line_2, int *line_number )
 {
+    char temp1[MAX_LINE_LEN];
+    char temp2[MAX_LINE_LEN];
+    *line_number = 1;
+    while (1)
+    {
+        char *f1 = fgets(temp1, MAX_LINE_LEN, file_1);
+        char *f2 = fgets(temp2, MAX_LINE_LEN, file_2);
+        if (f1 == NULL && f2 == NULL)
+        {
+            if (f1 != NULL)
+                strcpy(line_1, temp1);
+            else
+                line_1[0] = '\0';
+            if (f2 != NULL)
+                strcpy(line_2, temp2);
+            else
+                line_2[0] = '\0';
+            return 1;
+        }
+        if (strcmp(temp1,temp2) != 0)
+        {
+            strcpy(line_1, temp1);
+            strcpy(line_2,temp2);
+            return 1;
+        }
+        (*line_number)++;
+    }
     // TODO: write your code here
 }
 
